@@ -72,6 +72,10 @@ const WishlistPage = () => {
     return null; // Prevents hydration error
   }
 
+  console.log("wishlist item: ", wishlistItems.map((item) => console.log("item: ", item.ID)
+   ));
+
+
   return (
     <div className="container mx-auto px-4 py-12 pt-16">
       <div className="flex justify-between items-center mb-8">
@@ -87,7 +91,7 @@ const WishlistPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {wishlistItems.map((item) => (
-          <div key={item.id} className="overflow-hidden">
+          <div key={item.price} className="overflow-hidden">
             <div className="relative aspect-square">
               <Image
                 src={
@@ -103,7 +107,7 @@ const WishlistPage = () => {
                 variant="ghost"
                 size="icon"
                 className="absolute top-2 right-2 bg-brown-300 hover:bg-brown-200 rounded-full text-brown-700 hover:text-red-600"
-                onClick={() => handleRemoveItem(String(item.id), item.name)}
+                onClick={() => handleRemoveItem(String(item.ID), item.name)}
               >
                 <Trash2 className="h-5 w-5" />
               </Button>
@@ -112,7 +116,7 @@ const WishlistPage = () => {
               <div className="flex items-center justify-between">
                 <div>
                 <Link
-                href={`/product/${item.id}`}
+                href={`/products/${item.ID}}`}
                 className="font-medium hover:underline"
               >
                 {item.name}

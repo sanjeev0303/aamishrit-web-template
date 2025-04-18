@@ -114,7 +114,7 @@ export type NewUser = {
 
 
 export interface Product {
-    id: number
+    ID: number
     name: string
     price: number
     description: string

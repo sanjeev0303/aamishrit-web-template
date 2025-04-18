@@ -9,7 +9,7 @@ import { useUser } from "@clerk/nextjs"
 
 export default function ConfirmClient() {
     const router = useRouter()
-    const { product, quantity } = useSelector((state: RootState) => state.cart)
+    const { product, quantity } = useSelector((state: RootState) => state.cartReducer)
 
     if (!product) {
         return <div className="text-center text-xl text-red-500 py-10">No product selected. Go back and choose something.</div>
@@ -18,7 +18,7 @@ export default function ConfirmClient() {
     const userDetails = useUser();
     const userEmail = userDetails.user?.primaryEmailAddress
     console.log(userEmail);
-    
+
 
     const totalPrice = quantity * product.price
 

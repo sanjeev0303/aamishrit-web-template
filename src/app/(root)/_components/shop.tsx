@@ -73,14 +73,15 @@ const ShopSection = () => {
                   src={category.images?.[0] || "/placeholder.svg"}
                   alt={category.name}
                   fill
-                  className="object-cover transition-transform duration-500"
+                  className="object-contain transition-transform duration-500"
                 />
+                <div className="absolute inset-0 bg-black bg-opacity-50  opacity-0 hover:opacity-3 transition-opacity duration-300"></div>
               </div>
-              <div className="p-6 flex flex-col flex-grow bg-white">
-                <h3 className="text-2xl font-semibold text-luxury-dark mb-2">
+              <div className="px-6 py-2 pb-4 flex flex-col flex-grow bg-white">
+                <h3 className="text-2xl font-semibold text-brown-800  uppercase">
                   {category.name}
                 </h3>
-                <p className="text-luxury-text/70 mb-4 flex-grow line-clamp-3">
+                <p className="text-brown-700/80 mb-4 flex-grow line-clamp-3 ">
                   {category.description || "No description available"}
                   <Button></Button>
                 </p>

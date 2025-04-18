@@ -11,11 +11,11 @@ const CartItemCard = ({
   item,
 }: {
   item: {
-    id: string;
+    ID: string;
     name: string;
     price: number;
     quantity: number;
-    productImages: string[];
+    images: string[];
   };
 }) => {
 //   const cartItems = useAppSelector((state) => state.cartReducer.items) || [];
@@ -31,10 +31,10 @@ const CartItemCard = ({
   };
 
   return (
-    <div key={item.id} className="p-6 flex flex-col sm:flex-row gap-6 group">
+    <div key={item.ID} className="p-6 flex flex-col sm:flex-row gap-6 group">
       <div className="relative h-24 w-24 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden">
         <Image
-          src={item.productImages[0] || "/placeholder.svg?height=96&width=96"}
+          src={item.images[0] || "/placeholder.svg?height=96&width=96"}
           alt={item.name}
           fill
           className="object-cover"
@@ -43,7 +43,7 @@ const CartItemCard = ({
       <div className="flex-grow">
         <div className="flex justify-between">
           <Link
-            href={`/product/${item.id}`}
+            href={`/products/${item.ID}`}
             className="font-medium text-gray-900 hover:text-brand-600 transition-colors"
           >
             {item.name}
@@ -60,7 +60,7 @@ const CartItemCard = ({
             <button
               className="px-3 py-1 hover:bg-gray-100 hover:text-brand-600"
               onClick={() =>
-                handleUpdateQuantity(item.id, Math.max(1, item.quantity - 1))
+                handleUpdateQuantity(item.ID, Math.max(1, item.quantity - 1))
               }
               disabled={item.quantity <= 1}
             >
@@ -69,7 +69,7 @@ const CartItemCard = ({
             <span className="px-4 py-1 border-x">{item.quantity}</span>
             <button
               className="px-3 py-1 hover:bg-gray-100 hover:text-brand-600"
-              onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+              onClick={() => handleUpdateQuantity(item.ID, item.quantity + 1)}
             >
              <Plus className="h-3 w-3" />
             </button>
@@ -78,7 +78,7 @@ const CartItemCard = ({
             variant="ghost"
             size="icon"
             className="rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity"
-            onClick={() => handleRemoveItem(item.id, item.name)}
+            onClick={() => handleRemoveItem(item.ID, item.name)}
           >
             <Trash2 className="h-4 w-4" />
           </Button>

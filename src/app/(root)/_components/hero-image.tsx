@@ -48,7 +48,7 @@ const HeroImage = () => {
             width={1500}
             height={1000}
             priority
-            className="object-cover w-full h-full max-sm:h-[40vh]"
+            className="object-fill w-full h-full max-sm:h-[40vh]"
           />
         </motion.div>
       </motion.div>

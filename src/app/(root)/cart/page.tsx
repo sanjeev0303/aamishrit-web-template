@@ -59,7 +59,7 @@ export default function CartPage() {
             <CardContent className="p-0">
               <div className="divide-y">
                 {cartItems.map((item: any) => (
-                  <CartItemCard key={item.id} item={item} />
+                  <CartItemCard key={item.ID} item={item} />
                 ))}
               </div>
             </CardContent>

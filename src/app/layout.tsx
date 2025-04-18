@@ -35,6 +35,7 @@ export default function RootLayout({
         >
           <QueryProvider>
             {children}
+
           </QueryProvider>
         </body>
       </html>

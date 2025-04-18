@@ -2,28 +2,28 @@ import Image from "next/image";
 import Link from "next/link";
 
 type ProductCardProps = {
-  productId: string;
+  id: string;
   name: string;
-  photo: string;
+  images: string;
   price: number;
   stock?: number;
   handler?: () => void;
 };
 
 const ProductCard = ({
-  productId,
+  id,
   name,
-  photo,
+images,
   price,
 }: ProductCardProps) => {
 
   return (
     <div className="flex flex-col mx-auto">
-            <Link href={`/products/${productId}`}>
+            <Link href={`/products/${}`}>
             <div className="h-[22rem] rounded-lg overflow-hidden">
                       <Image
-                        src={photo}
-                        alt={productId}
+                        src={images}
+                        alt={id}
                         width={1500}
                         height={500}
                         className="object-cover h-full rounded-lg"

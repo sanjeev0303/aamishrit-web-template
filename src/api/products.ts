@@ -8,5 +8,6 @@ export async function getAllProducts(): Promise<Product[]> {
 
 export async function getProductsById(id: string | number): Promise<Product> {
     const res = await axios.get(`/api/products/${id}`)
-    return res.data
+    const data = res.data
+    return data
 }

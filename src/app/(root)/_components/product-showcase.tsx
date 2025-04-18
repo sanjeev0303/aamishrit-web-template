@@ -4,12 +4,16 @@ import { useProducts } from "@/hooks/useProducts";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronRight, ShoppingCart } from "lucide-react";
+import { ChevronRight, Heart, ShoppingCart } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import { useAppDispatch } from "@/store/store";
+import { addToCart, openCart } from "@/store/slices/cartSlice";
+import { toast } from "sonner";
 
 const ProductShowcase = () => {
   const { products, loading, error } = useProducts();
   const [categories, setCategories] = useState<string[]>([]);
+  const dispatch = useAppDispatch()
 
     console.log("Products: ", products ?? "No category available");
     if (products.length > 0) {
@@ -92,7 +96,7 @@ const ProductShowcase = () => {
         </motion.div>
 
         {categories.length === 0 ? (
-          <div className="text-center py-12 pt-20">
+          <div className="text-center py-5">
             <p className="text-lg text-brown-700">
               No product categories availabel.
             </p>
@@ -101,11 +105,20 @@ const ProductShowcase = () => {
           <div className="space-y-16">
             {categories.map((category) => {
               const categoryProducts = products.filter(
-                (product) => product.Category[0].name === category
+                (product) => product.Category[0]?.name === category
               );
 
               if (categoryProducts.length === 0) {
                 return null;
+              }
+
+
+              const handleAddToCart = (e: React.MouseEvent) => {
+                e.preventDefault()
+                e.stopPropagation()
+                dispatch(addToCart(products[0]))
+                dispatch(openCart())
+                toast.success(`${products[0].name} added to cart`)
               }
 
               return (
@@ -132,53 +145,68 @@ const ProductShowcase = () => {
                   >
                     {categoryProducts.map((product) => (
                       <motion.div
-                        key={product.id}
+                        key={product.ID}
                         variants={itemVariants}
                         whileHover={{ y: -5 }}
-                        className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300"
+                        className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 hover:group"
                       >
-                        <div className="relative aspect-square overflow-hidden">
+                        <div className="relative aspect-square overflow-hidden ">
+                          <Link href={`/products/${product.ID}`}>
                           <Image
-                            src={product.images[0] || "/placeholder.svg"}
+                            src={product.images?.[0] || "/placeholder.svg"}
                             alt={product.name}
                             fill
-                            className="object-cover transition-transform duration-500 hover:scale-105"
+                            className="object-contain transition-transform duration-500 hover:scale-105"
                           />
+                          <div className="absolute inset-0 bg-black bg-opacity-50  opacity-0 hover:opacity-3 transition-opacity duration-300"></div>
+                          </Link>
                           {/* {product.isNew && (
-                                        <div className="absolute top-2 left-2">
-                                          <Badge className="bg-brown-600 text-white">
-                                            New
-                                          </Badge>
-                                        </div>
-                                      )}
-                                      {product.isBestseller && (
-                                        <div className="absolute top-2 right-2">
-                                          <Badge className="bg-brown-700/80 text-white">
-                                            Bestseller
-                                          </Badge>
-                                        </div>
-                                      )} */}
-                        </div>
-                        <div className="p-4">
-                          <h4 className="text-lg font-semibold text-brown-text mb-2 line-clamp-1">
-                            {product.name}
-                          </h4>
-                          {product.description && (
-                            <p className="text-sm text-brown-text/70 mb-3 line-clamp-2">
-                              {product.description}
-                            </p>
-                          )}
-                          <div className="flex justify-between items-center mt-2">
-                            <span className="text-lg font-bold text-brown-700">
-                              {formatPrice(product.price)}
-                            </span>
-                            <Button
-                              variant="outline"
+                            <div className="absolute top-2 left-2">
+                              <Badge className="bg-brown-600 text-white">
+                                New
+                              </Badge>
+                            </div>
+                          )} */}
+                          {/* {product.isBestseller && (
+                            <div className="absolute top-2 left-2">
+                              <Badge className="bg-brown-700/80 text-white">
+                                Bestseller
+                              </Badge>
+                            </div>
+                          )} */}
+                         <div className="absolute top-2 right-2 flex flex-col items-center">
+                         <Button
+                              variant="ghost"
                               size="sm"
-                              className="text-brown-700 bg-brown-300 hover:bg-brown-200 hover:text-brown-800 rounded-full"
+                              className="text-brown-700 hover:bg-transparent hover:text-brown-900"
+                              onClick={() => handleAddToCart}
                             >
                               <ShoppingCart className="w-4 h-4" />
                             </Button>
+                         <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-brown-700 hover:bg-transparent hover:text-brown-900"
+                              onClick={() => handleAddToCart}
+                            >
+                              <Heart className="w-4 h-4" />
+                            </Button>
+                            </div>
+                        </div>
+                        <div className="px-4 py-1">
+                          <h4 className="text-lg font-semibold text-brown-text  line-clamp-1 leading-tight">
+                            {product.name}
+                          </h4>
+                          {product.description && (
+                            <p className="text-sm text-brown-text/70  line-clamp-2">
+                              {product.description}
+                            </p>
+                          )}
+                          <div className="flex justify-between items-center mt-1 ">
+                            <span className="text-lg font-bold text-brown-700">
+                              {formatPrice(product.price)}
+                            </span>
+
                           </div>
                         </div>
                       </motion.div>
@@ -189,43 +217,6 @@ const ProductShowcase = () => {
             })}
           </div>
         )}
-
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 lg:grid-cols-4 lg:gap-12">
-          {products.map((product) => (
-            <Link
-              key={product.ID}
-              href={`/product/${product.ID}`}
-              className="block"
-            >
-              <div key={product.ID} className="product-card">
-                <div className="relative overflow-hidden h-64">
-                  <Image
-                    src={product.images?.[0] || "/placeholder.svg"}
-                    alt={product.name}
-                    fill
-                    className="object-cover transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold text-luxury-text mb-2">
-                    {product.name}
-                  </h3>
-                  <div className="flex justify-between items-center mt-4">
-                    <span className="text-lg font-bold text-luxury-dark">
-                      ₹{product.price.toFixed(2)}
-                    </span>
-                    <Button
-                      variant="outline"
-                      className="border-luxury-medium text-luxury-dark hover:bg-luxury-light"
-                    >
-                      Buy Now
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div> */}
       </div>
     </section>
   );

@@ -5,9 +5,9 @@ import { useAppDispatch, useAppSelector } from "@/store/store"
 import { fetchProducts, setCurrentPage } from "@/store/slices/productSlice"
 import { useEffect } from "react"
 import { Product } from "@/types"
-import ProductCard from "./product-card"
 import { Button } from "../ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import ProductCard from "./product-card"
 
 interface ProductGridProps {
   featured?: boolean
@@ -56,7 +56,7 @@ export default function ProductGrid({ limit }: ProductGridProps) {
     <div className="space-y-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {currentProducts.map((product: Product) => (
-          <ProductCard product={product} key={product.id} />
+          <ProductCard product={product} key={product.ID} />
         ))}
       </div>
 

@@ -42,13 +42,13 @@ const AboutSection = () => {
                                     initial={{ opacity: 0, scale: 0.8 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.6 }}
-                                    className="relative h-64 md:h-96 rounded-lg overflow-hidden"
+                                    className="relative h-64 md:h-96 rounded-lg overflow-hidden bg-brown-50"
                                 >
                                     <Image
                                         src={item.images?.[0] || "/placeholder.svg"}
                                         alt={item.name}
                                         fill
-                                        className="object-cover"
+                                        className="object-contain"
                                     />
                                 </motion.div>
                             </div>
@@ -57,7 +57,7 @@ const AboutSection = () => {
                                     initial={{ opacity: 0, x: -50 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.6, delay: 0.1 }}
-                                    className="text-2xl md:text-3xl font-bold text-luxury-darkest mb-6"
+                                    className="text-2xl md:text-3xl font-bold text-brown-200 mb-6 uppercase"
                                 >
                                     {item.name}
                                 </motion.h3>
