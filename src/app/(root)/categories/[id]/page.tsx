@@ -58,7 +58,7 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
 
         {/* Product Grid */}
         <Suspense fallback={<ProductGridSkeleton count={12} />}>
-          <ProductGrid categorySlug={category.id} />
+          <ProductGrid categorySlug={category.ID} />
         </Suspense>
       </div>
     </div>
