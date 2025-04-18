@@ -91,8 +91,8 @@ const WishlistPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {wishlistItems.map((item) => (
-          <div key={item.price} className="overflow-hidden">
-            <div className="relative aspect-square">
+          <div key={item.ID} className="overflow-hidden">
+            <div className="relative bg-brown-200 rounded-lg overflow-hidden">
               <Image
                 src={
                   item.images && item.images.length > 0
@@ -100,7 +100,8 @@ const WishlistPage = () => {
                     : "/placeholder.svg?height=300&width=300"
                 }
                 alt={item.name}
-                fill
+                width={300}
+                height={200}
                 className="object-cover"
               />
               <Button

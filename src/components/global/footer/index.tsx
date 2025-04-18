@@ -1,105 +1,92 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Facebook, Instagram, Twitter } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Facebook, Instagram, Twitter } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#6B4226] text-[#FDF7F0] w-full ">
-      <div className="container mx-auto py-12 px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-[#4B2E1D] text-[#FDF7F0] w-full border-t border-[#7B4E37]">
+      <div className="container mx-auto py-16 px-6 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Logo and About */}
-          <div className="col-span-1 md:col-span-1">
-            <Image src="/logo.png" alt="logo" width={70} height={50} className="mb-4" />
-            <p className="text-[#E6D5C1] text-sm mt-4">
-              Premium organic products for a healthier lifestyle. Sustainably sourced and carefully crafted.
+          <div>
+            <Image src="/logo.png" alt="logo" width={70} height={50} className="mb-6" />
+            <p className="text-[#D8C4B0] text-sm leading-relaxed">
+              Premium organic products for a healthier lifestyle. Sustainably sourced and elegantly crafted for your well-being.
             </p>
             <div className="flex space-x-4 mt-6">
-              <Link href="#" className="text-[#E6D5C1] hover:text-white transition-colors">
-                <Facebook size={20} />
-              </Link>
-              <Link href="#" className="text-[#E6D5C1] hover:text-white transition-colors">
-                <Instagram size={20} />
-              </Link>
-              <Link href="#" className="text-[#E6D5C1] hover:text-white transition-colors">
-                <Twitter size={20} />
-              </Link>
+              {[Facebook, Instagram, Twitter].map((Icon, i) => (
+                <Link key={i} href="#" className="hover:text-white transition-colors text-[#D8C4B0]">
+                  <Icon size={22} />
+                </Link>
+              ))}
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/" className="text-[#E6D5C1] hover:text-white transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop" className="text-[#E6D5C1] hover:text-white transition-colors">
-                  Shop
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-[#E6D5C1] hover:text-white transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-[#E6D5C1] hover:text-white transition-colors">
-                  Contact
-                </Link>
-              </li>
+            <h3 className="text-lg font-semibold mb-4 uppercase tracking-wide text-[#FDF7F0]">Quick Links</h3>
+            <ul className="space-y-2 text-sm text-[#D8C4B0]">
+              {["Home", "Products", "About Us", "Contact"].map((link, idx) => (
+                <li key={idx}>
+                  <Link
+                    href={`/${link.toLowerCase().replace(" ", "")}`}
+                    className="hover:text-white transition-colors"
+                  >
+                    {link}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Categories */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Categories</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/shop/herbal-tea" className="text-[#E6D5C1] hover:text-white transition-colors">
-                  Herbal Tea
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop/jaggery" className="text-[#E6D5C1] hover:text-white transition-colors">
-                  Jaggery
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop/cookies" className="text-[#E6D5C1] hover:text-white transition-colors">
-                  Cookies
-                </Link>
-              </li>
+            <h3 className="text-lg font-semibold mb-4 uppercase tracking-wide text-[#FDF7F0]">Categories</h3>
+            <ul className="space-y-2 text-sm text-[#D8C4B0]">
+              {[
+                { name: "Herbal Tea", id: "herbal-tea" },
+                { name: "Jaggery", id: "jaggery" },
+                { name: "Cookies", id: "cookies" },
+              ].map((cat, idx) => (
+                <li key={idx}>
+                  <Link
+                    href={`/categories/${cat.id}`}
+                    className="hover:text-white transition-colors"
+                  >
+                    {cat.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Subscribe</h3>
-            <p className="text-[#E6D5C1] text-sm mb-4">
-              Subscribe to our newsletter for exclusive offers and updates.
+            <h3 className="text-lg font-semibold mb-4 uppercase tracking-wide text-[#FDF7F0]">Subscribe to Newsletter</h3>
+            <p className="text-[#D8C4B0] text-sm mb-4 leading-relaxed">
+              Subscribe to our newsletter for early access to exclusive offers and product launches.
             </p>
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-3">
               <Input
                 type="email"
                 placeholder="Your email address"
-                className="bg-luxury-darkest text-[#E6D5C1] border-[#8B5A2B]"
+                className="bg-[#3B2415] text-[#FDF7F0] border-[#8B5A2B] placeholder-[#C4A98A]"
               />
-              <Button className="bg-[#8B5A2B] hover:bg-[#E6D5C1] hover:text-[#8B5A2B] text-[#E6D5C1]">Subscribe</Button>
+              <Button className="bg-[#8B5A2B] hover:bg-[#D8C4B0] hover:text-[#4B2E1D] text-[#FDF7F0] font-medium transition-colors">
+                Subscribe
+              </Button>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-luxury-medium mt-8 pt-8 text-center text-[#E6D5C1] text-sm">
-          <p>© {new Date().getFullYear()} Luxury Organic Products. All rights reserved.</p>
+        <div className="border-t border-[#7B4E37] mt-12 pt-6 text-center text-sm text-[#D8C4B0] tracking-wide">
+          <p>© {new Date().getFullYear()} Aamishrit. All rights reserved.</p>
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

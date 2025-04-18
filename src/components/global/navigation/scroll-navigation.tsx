@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import NavigationBar from "@/components/global/navigation"
+import NavigationBar from "."
 
 export default function ScrollNavigation() {
   const [prevScrollPos, setPrevScrollPos] = useState(0)
@@ -38,7 +38,7 @@ export default function ScrollNavigation() {
         visible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <NavigationBar />
+        <NavigationBar />
     </div>
   )
 }

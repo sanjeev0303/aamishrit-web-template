@@ -13,14 +13,14 @@ import { toast } from "sonner";
 const ProductShowcase = () => {
   const { products, loading, error } = useProducts();
   const [categories, setCategories] = useState<string[]>([]);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
-    console.log("Products: ", products ?? "No category available");
-    if (products.length > 0) {
-        products.forEach((product) => {
-            console.log("Category Name:", product.Category ?? "No category");
-        });
-    }
+  console.log("Products: ", products ?? "No category available");
+  if (products.length > 0) {
+    products.forEach((product) => {
+      console.log("Category Name:", product.Category ?? "No category");
+    });
+  }
   if (error)
     return <div className="text-center py-20 text-red-600">Error: {error}</div>;
 
@@ -67,29 +67,50 @@ const ProductShowcase = () => {
 
   if (loading) {
     return (
-      <div className="py-16 px-4 md:px-8">
-        <div className="container mx-auto">
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brown-600"></div>
-          </div>
+      <section className="py-16 px-4 md:px-8">
+        <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="bg-brown-50/60 backdrop-blur-md border border-brown-100 rounded-2xl shadow-lg p-4 animate-pulse flex flex-col items-center space-y-4"
+            >
+              <div className="relative w-full aspect-square bg-brown-100/70 rounded-xl flex items-center justify-center">
+                <Image
+                  src="/placeholder.svg"
+                  alt="Loading"
+                  width={60}
+                  height={60}
+                  className="opacity-40"
+                />
+              </div>
+              <div className="h-5 bg-brown-200 rounded w-3/4" />
+              <div className="h-3 bg-brown-100 rounded w-full" />
+              <div className="h-3 bg-brown-100 rounded w-5/6" />
+              <div className="h-4 bg-brown-300 rounded w-1/3" />
+            </div>
+          ))}
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <section className="py-16 px-4 md:px-8">
+    <section className="py-16 px-4 md:px-8 lg:px-16">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
+          className="text-center mb-16 px-4"
         >
-          <h2 className="text-3xl font-bold text-center text-brown-heading mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-brown-heading via-brown-700 to-brown-500 drop-shadow-sm mb-4">
             Our Products
           </h2>
-          <p className="text-center text-brown-text/80 max-w-2xl mx-auto mb-12">
+
+          <div className="mx-auto h-1 w-16 bg-gradient-to-r from-brown-500 via-brown-heading to-brown-500 rounded-full mb-6" />
+
+          <p className="text-lg md:text-xl text-brown-text/80 max-w-2xl mx-auto leading-relaxed">
             Discover our collection of premium organic products, carefully
             crafted for your health and enjoyment.
           </p>
@@ -112,14 +133,13 @@ const ProductShowcase = () => {
                 return null;
               }
 
-
               const handleAddToCart = (e: React.MouseEvent) => {
-                e.preventDefault()
-                e.stopPropagation()
-                dispatch(addToCart(products[0]))
-                dispatch(openCart())
-                toast.success(`${products[0].name} added to cart`)
-              }
+                e.preventDefault();
+                e.stopPropagation();
+                dispatch(addToCart(products[0]));
+                dispatch(openCart());
+                toast.success(`${products[0].name} added to cart`);
+              };
 
               return (
                 <div key={category} className="space-y-6">
@@ -141,72 +161,60 @@ const ProductShowcase = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-100px" }}
-                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 md:gap-8"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
                   >
                     {categoryProducts.map((product) => (
                       <motion.div
                         key={product.ID}
                         variants={itemVariants}
-                        whileHover={{ y: -5 }}
-                        className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 hover:group"
+                        whileHover={{ y: -4 }}
+                        className="bg-white/60 backdrop-blur-md border border-brown-200 rounded-3xl shadow-lg transition-all duration-300 hover:shadow-xl group overflow-hidden
+    w-full sm:max-w-[97%] md:max-w-[90%] mx-auto"
                       >
-                        <div className="relative aspect-square overflow-hidden ">
+                        <div className="relative h-64 sm:h-72 lg:h-80 xl:h-96 overflow-hidden bg-brown-50">
                           <Link href={`/products/${product.ID}`}>
-                          <Image
-                            src={product.images?.[0] || "/placeholder.svg"}
-                            alt={product.name}
-                            fill
-                            className="object-contain transition-transform duration-500 hover:scale-105"
-                          />
-                          <div className="absolute inset-0 bg-black bg-opacity-50  opacity-0 hover:opacity-3 transition-opacity duration-300"></div>
+                            <Image
+                              src={product.images?.[0] || "/placeholder.svg"}
+                              alt={product.name}
+                              fill
+                              className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-brown-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                           </Link>
-                          {/* {product.isNew && (
-                            <div className="absolute top-2 left-2">
-                              <Badge className="bg-brown-600 text-white">
-                                New
-                              </Badge>
-                            </div>
-                          )} */}
-                          {/* {product.isBestseller && (
-                            <div className="absolute top-2 left-2">
-                              <Badge className="bg-brown-700/80 text-white">
-                                Bestseller
-                              </Badge>
-                            </div>
-                          )} */}
-                         <div className="absolute top-2 right-2 flex flex-col items-center">
-                         <Button
+
+                          <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
+                            <Button
                               variant="ghost"
-                              size="sm"
-                              className="text-brown-700 hover:bg-transparent hover:text-brown-900"
-                              onClick={() => handleAddToCart}
+                              size="icon"
+                              className="bg-white/70 hover:bg-white rounded-full shadow backdrop-blur-sm"
+                              onClick={handleAddToCart}
                             >
-                              <ShoppingCart className="w-4 h-4" />
+                              <ShoppingCart className="w-5 h-5 text-brown-700" />
                             </Button>
-                         <Button
+                            <Button
                               variant="ghost"
-                              size="sm"
-                              className="text-brown-700 hover:bg-transparent hover:text-brown-900"
-                              onClick={() => handleAddToCart}
+                              size="icon"
+                              className="bg-white/70 hover:bg-white rounded-full shadow backdrop-blur-sm"
+                              onClick={handleAddToCart}
                             >
-                              <Heart className="w-4 h-4" />
+                              <Heart className="w-5 h-5 text-brown-700" />
                             </Button>
-                            </div>
+                          </div>
                         </div>
-                        <div className="px-4 py-1">
-                          <h4 className="text-lg font-semibold text-brown-text  line-clamp-1 leading-tight">
+
+                        <div className="p-5 flex flex-col justify-between">
+                          <h4 className="text-xl font-semibold text-brown-800 mb-2 line-clamp-1">
                             {product.name}
                           </h4>
                           {product.description && (
-                            <p className="text-sm text-brown-text/70  line-clamp-2">
+                            <p className="text-sm text-brown-700/70 line-clamp-2 mb-2">
                               {product.description}
                             </p>
                           )}
-                          <div className="flex justify-between items-center mt-1 ">
+                          <div className="flex justify-between items-center">
                             <span className="text-lg font-bold text-brown-700">
                               {formatPrice(product.price)}
                             </span>
-
                           </div>
                         </div>
                       </motion.div>

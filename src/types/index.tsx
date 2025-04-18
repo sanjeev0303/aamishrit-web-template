@@ -118,6 +118,7 @@ export interface Product {
     name: string
     price: number
     description: string
+    quantity: number
     images: string[] // pq.StringArray equivalent
     stock: number
     category_id: number
@@ -128,7 +129,7 @@ export interface Product {
   }
 
   export interface Category {
-    id: number
+    ID: number | string
     name: string
     description: string
     products: Product[] // many-to-many

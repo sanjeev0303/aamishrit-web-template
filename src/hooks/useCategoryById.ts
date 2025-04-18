@@ -1,10 +1,10 @@
+import { getCategoryById } from "@/api/category";
 import { useQuery } from "@tanstack/react-query";
-import { getCategoryBySlug } from "@/api/category";
 
-export function useCategory(slug: string) {
+export function useCategory(id: string | number) {
     return useQuery({
-        queryKey: ["category", slug],
-        queryFn: () => getCategoryBySlug(slug),
-        enabled: !!slug, // prevents firing query with empty slug
+        queryKey: ["category", id],
+        queryFn: () => getCategoryById(id),
+        enabled: !!id, // prevents firing query with empty id
     });
 }
